@@ -5,6 +5,7 @@ contract Lottery {
   address public manager; // eventually will write frontend around this.
 
   function Lottery( ) public {
+    // the OWNER of the Lottery contract
     manager = msg.sender; // address of who invokes the instance of this function.
   }
 }
