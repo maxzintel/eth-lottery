@@ -5,6 +5,7 @@
 ### Variables
 
 * Manager: Address of the person who created the contract.
+  * Type of address.
 * Players: Array of addresses of people who have entered.
 
 ### Functions
