@@ -22,6 +22,18 @@
   * Examples: `int[3]` => `[1,2,3]`, `bool[2]` => `[true,false]`
 * *Dynamic Array:* Array that contains a single type of element but can change in size over time.
   * `int[]` => `[1,2,3]`, `bool[]` => `[true,false]`
+
+```Solidity
+contract TestArrays {
+  uint[] public myArray;
+
+  function TestArrays() public {
+    myArray.push(1); // sets value at index 0 to 1.
+    myArray.push(10); // sets value at index 1 to 10.
+  }
+}
+```
+
 * *Mapping:* Collection of key-value pairs. Think of JS objects and Python dictionaries. All keys must be of the same type and all values must be of the same type.
   * Examples: `mapping(string => string)` and `mapping(int => bool)`
 * *Struct:* Collection of KVP's that can have different types.
