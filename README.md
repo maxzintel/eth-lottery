@@ -22,6 +22,10 @@
   * Examples: `int[3]` => `[1,2,3]`, `bool[2]` => `[true,false]`
 * *Dynamic Array:* Array that contains a single type of element but can change in size over time.
   * `int[]` => `[1,2,3]`, `bool[]` => `[true,false]`
+  * Can also have nested arrays, `[[1,2,3], [3,4,5]]` in Solidity specifically. HOWEVER there is no way to pull a nested dynamic array through to Javascript. But weirdly, in Javascript you can separately have a nested array as well. The issue is with the translation layer.
+  * NOTE: Strings inside of solidity are represented as DYNAMIC ARRAYS. Keep this in mind with the above bullet point.
+    * WE CANNOT TRANSFER ARRAYS OF STRINGS TO JAVASCRIPT. Something like `const colors = ["red", "green", "blue"]` cannot exist.
+    * Double note, this course was made many moons ago, so this may be possible now.
 
 ```Solidity
 contract TestArrays {
@@ -49,7 +53,9 @@ contract TestArrays {
 
 * *Mapping:* Collection of key-value pairs. Think of JS objects and Python dictionaries. All keys must be of the same type and all values must be of the same type.
   * Examples: `mapping(string => string)` and `mapping(int => bool)`
+  * Use a mapping to represent many things.
 * *Struct:* Collection of KVP's that can have different types.
+  * Use a struct to represent a singular thing.
 
 ```Javascript
 struct Car {
