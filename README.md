@@ -25,11 +25,24 @@
 
 ```Solidity
 contract TestArrays {
-  uint[] public myArray;
+  uint[] public myArray; // Note since this is public, we automatically get a function to access the value. When its an array like here, we need to always pass the argument/index of what array item we want. We cannot just return the whole array by calling the base fnc.
 
   function TestArrays() public {
     myArray.push(1); // sets value at index 0 to 1.
     myArray.push(10); // sets value at index 1 to 10.
+  }
+
+  // Return the whole array
+  function getMyArray() public view returns (uint[]) {
+    return myArray;
+  }
+
+  function getArrayLength() public view returns (unint) {
+    return myArray.length;
+  }
+
+  function getFirstElement() public view returns (uint) {
+    return myArray[0];
   }
 }
 ```
