@@ -5,7 +5,7 @@ contract Lottery {
   address public manager; // eventually will write frontend around this.
   address[] public players; // dynamic array that can only contain addresses.
 
-  function Lottery( ) public {
+  constructor() public {
     // the OWNER of the Lottery contract
     manager = msg.sender; // address of who invokes the instance of this function.
   }
