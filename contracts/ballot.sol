@@ -14,6 +14,8 @@ contract Lottery {
   // for each invocation of this function, we want the address of who invoked it to be appended to the array players.
   // to enter, you need to send in some amount of eth thus we use 'payable'.
   function enter() public payable {
+    // require entrees to pay minimum 0.01 ether to enter.
+    require(msg.value > 0.01 ether); // used for validation, if it evaluates to true, the function proceeds
     players.push(msg.sender);
   }
 }
