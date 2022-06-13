@@ -5,6 +5,12 @@ contract Lottery {
   address public manager; // eventually will write frontend around this.
   address[] public players; // dynamic array that can only contain addresses.
 
+  // we dont want to repeat ourselves here, so make it a re-usable modifier.
+  modifier restricted() {
+    require(msg.sender == manager);
+    _;
+  }
+
   constructor() public {
     // the OWNER of the Lottery contract
     manager = msg.sender; // address of who invokes the instance of this function.
@@ -34,8 +40,8 @@ contract Lottery {
     delete players; // delete all elements within the players array
   }
 
-  modifier restricted() {
-    require(msg.sender == manager);
-    _;
+  // view = doesnt change any data in the contract
+  function getPlayers() public view returns (address[]) {
+    return players;
   }
 }
