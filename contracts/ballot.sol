@@ -19,11 +19,17 @@ contract Lottery {
     players.push(msg.sender);
   }
 
+  // Random numbers are tricky in Solidity. They can be manipulated in unforeseen ways.
+  // This one is psuedo random and can be possibly gamed (maybe called multiple times in a short period).
+  // Point of emphasis, if you KNOW all the parameters being hashed below, you can predict the number. One solution in random number generation off chain, but that kinda defeats the trustworthiness of the process.
   function random() private view returns (uint) {
-    return uint(keccak256(block.difficulty, now));
+    return uint(keccak256(block.difficulty, now, players)); // returns a hash until you pass into a unint function.
   }
 
+  // Since only the manager can pick a winner (ideally), risk of random number gaming is 
   function pickWinner() public {
-    uint index=random() % players.length;
+    uint index=random() % players.length; // modulo returns the 'remainder' between the division of two numbers.
+    players[index].transfer(this.balance); // Returns the address at this array position.
+    // this = current contract, balance = the balance in the contract.
   }
 }
