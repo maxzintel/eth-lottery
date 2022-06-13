@@ -31,5 +31,6 @@ contract Lottery {
     uint index=random() % players.length; // modulo returns the 'remainder' between the division of two numbers.
     players[index].transfer(this.balance); // Returns the address at this array position.
     // this = current contract, balance = the balance in the contract.
+    delete players; // delete all elements within the players array
   }
 }
