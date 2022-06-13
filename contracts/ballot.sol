@@ -28,6 +28,7 @@ contract Lottery {
 
   // Since only the manager can pick a winner (ideally), risk of random number gaming is 
   function pickWinner() public {
+    require(msg.sender == manager);
     uint index=random() % players.length; // modulo returns the 'remainder' between the division of two numbers.
     players[index].transfer(this.balance); // Returns the address at this array position.
     // this = current contract, balance = the balance in the contract.
