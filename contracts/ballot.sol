@@ -26,12 +26,16 @@ contract Lottery {
     return uint(keccak256(block.difficulty, now, players)); // returns a hash until you pass into a unint function.
   }
 
-  // Since only the manager can pick a winner (ideally), risk of random number gaming is 
-  function pickWinner() public {
-    require(msg.sender == manager);
+  // Since only the manager can pick a winner (ideally), risk of random number gaming is low.
+  function pickWinner() public restricted {
     uint index=random() % players.length; // modulo returns the 'remainder' between the division of two numbers.
     players[index].transfer(this.balance); // Returns the address at this array position.
     // this = current contract, balance = the balance in the contract.
     delete players; // delete all elements within the players array
+  }
+
+  modifier restricted() {
+    require(msg.sender == manager);
+    _;
   }
 }
