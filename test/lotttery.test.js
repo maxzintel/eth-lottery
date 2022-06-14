@@ -59,4 +59,18 @@ describe('Lottery', () => {
     assert.equal(accounts[1], players[1]);
     assert.equal(accounts[2], players[2]);
   });
+
+  it('requires a minimum amount of ether to enter', async () => {
+    // attempt to run the code inside the curly bois
+    try {
+      await lottery.methods.enter().send({
+        from: accounts[0],
+        value: web3.utils.toWei('0.001','ether')
+      });
+      assert(false); // fail test if this runs successfully.
+      // if something goes wrong, the catch statement is triggered.
+    } catch (err) {
+      assert(err); // check for 'truthiness' with assert
+    }
+  }); 
 });
