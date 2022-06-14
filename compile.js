@@ -2,7 +2,7 @@ const path = require('path'); // cross-platform compatibility between windows an
 const fs = require('fs');
 const solc = require('solc');
 
-const lotteryPath = path.resolve(__dirname, 'contracts', 'ballot.sol'); // dirname = current working directory
+const lotteryPath = path.resolve(__dirname, 'contracts', 'lottery.sol'); // dirname = current working directory
 const source = fs.readFileSync(lotteryPath, 'utf8');
 
 // Here could specify the actual file with FILENAME:Inbox. Since we are doing the source code as a whole, we didnt need to.
