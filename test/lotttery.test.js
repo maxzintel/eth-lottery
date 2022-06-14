@@ -1,4 +1,5 @@
 const assert = require('assert');
+const { exec } = require('child_process');
 const ganache = require('ganache-cli');
 const Web3 = require('web3'); // Capital W means we are the constructor here.
 const web3 = new Web3(ganache.provider()); // instantiating the constructor above. attempts to connect to local test network. Different providers will be set for 'production' networks.
@@ -12,7 +13,7 @@ beforeEach(async () => {
 
   lottery = await new web3.eth.Contract(JSON.parse(interface))
     .deploy({ data: bytecode})
-    .send({ from: accounts[0], gas: '1000000 '});
+    .send({ from: accounts[0], gas: '1000000'});
 });
 
 describe('Lottery', () => {
@@ -61,16 +62,38 @@ describe('Lottery', () => {
   });
 
   it('requires a minimum amount of ether to enter', async () => {
+    let executed;
     // attempt to run the code inside the curly bois
     try {
       await lottery.methods.enter().send({
         from: accounts[0],
         value: web3.utils.toWei('0.001','ether')
       });
-      assert(false); // fail test if this runs successfully.
+      executed = 'success'; // fail test if this runs successfully.
       // if something goes wrong, the catch statement is triggered.
     } catch (err) {
-      assert(err); // check for 'truthiness' with assert
+      executed = 'fail'; // check for 'truthiness' with assert
     }
-  }); 
+
+    assert.equal('fail', executed);
+  });
+
+  it('requires the manager to pickWinner', async () => {
+    let executed;
+    try {
+      await lottery.methods.enter().send({
+        from: accounts[0],
+        value: web3.utils.toWei('0.21','ether')
+      });
+
+      await lottery.methods.pickWinner().send({
+        from: accounts[1],
+      });
+      executed = 'success';
+    } catch (err) {
+      executed = 'fail';
+    }
+
+    assert.equal('fail', executed);
+  });
 });
