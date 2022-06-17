@@ -111,7 +111,8 @@ describe('Lottery', () => {
     });
 
     const winningBalance = await web3.eth.getBalance(accounts[0]);
+    const dif = winningBalance - initialBalance;
 
-    assert.ok(initialBalance < winningBalance);
+    assert.ok(dif < web3.utils.toWei('1.8', 'ether'));
   });
 });
