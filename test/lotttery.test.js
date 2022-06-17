@@ -16,6 +16,7 @@ beforeEach(async () => {
     .send({ from: accounts[0], gas: '1000000'});
 });
 
+
 describe('Lottery', () => {
   it('deploys a contract', () => {
     assert.ok(lottery.options.address);
@@ -38,17 +39,17 @@ describe('Lottery', () => {
   it('allows many people to enter', async () => {
     await lottery.methods.enter().send({
       from: accounts[0],
-      value: web3.utils.toWei('1','ether')
+      value: web3.utils.toWei('1.14','ether')
     });
 
     await lottery.methods.enter().send({
       from: accounts[1],
-      value: web3.utils.toWei('2','ether')
+      value: web3.utils.toWei('0.98','ether')
     });
 
     await lottery.methods.enter().send({
       from: accounts[2],
-      value: web3.utils.toWei('3','ether')
+      value: web3.utils.toWei('2.45','ether')
     });
 
     const players = await lottery.methods.getPlayers().call({
@@ -95,5 +96,22 @@ describe('Lottery', () => {
     }
 
     assert.equal('fail', executed);
+  });
+
+  it('sends money to the winner', async () => {
+    await lottery.methods.enter().send({
+      from: accounts[0],
+      value: web3.utils.toWei('0.21','ether')
+    });
+
+    const initialBalance = await web3.eth.getBalance(accounts[0]);
+
+    await lottery.methods.pickWinner().send({
+      from: accounts[0],
+    });
+
+    const winningBalance = await web3.eth.getBalance(accounts[0]);
+
+    assert.ok(initialBalance < winningBalance);
   });
 });
