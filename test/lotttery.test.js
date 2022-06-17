@@ -101,7 +101,7 @@ describe('Lottery', () => {
   it('sends money to the winner', async () => {
     await lottery.methods.enter().send({
       from: accounts[0],
-      value: web3.utils.toWei('0.21','ether')
+      value: web3.utils.toWei('2','ether')
     });
 
     const initialBalance = await web3.eth.getBalance(accounts[0]);
@@ -113,6 +113,7 @@ describe('Lottery', () => {
     const winningBalance = await web3.eth.getBalance(accounts[0]);
     const dif = winningBalance - initialBalance;
 
+    // 1.8 here allows for some gas fees. It is rough though and could be improved. Maybe get gas fees as consts too to get exact value that would be in the winning account.
     assert.ok(dif < web3.utils.toWei('1.8', 'ether'));
   });
 });
